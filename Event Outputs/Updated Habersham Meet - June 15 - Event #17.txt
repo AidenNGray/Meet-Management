@@ -1,0 +1,15 @@
+<b>Event 17 - Girls 13 & Up 50 Yard Free</b>
+-------------------------------------------------
+<b>Lane Name                 Age Team     Seed Time</b>
+-------------------------------------------------
+<b>Heat 1 of 2</b>
+   2 Morgan Reynolds      15  WC       NT       
+   3 Corinne Miezejeski   13  ISL      NT       
+   4 Carsen Reynolds      14  WC       NT       
+<b>Heat 2 of 2</b>
+   1 Savannah Nash        13  EFF      NT       
+   2 Ruth Stout           13  HAB      NT       
+   3 Olivia Thompson      13  HAB      NT       
+   4 Emma Williams        13  ISL      NT       
+   5 Miranda Butler       13  WC       NT       
+   6 Amaia Hernandez      15  HAB      NT       

@@ -1,0 +1,18 @@
+Greetings brave leader of the YMCA Summer League!
+
+Hopefully this program makes your life a little bit easier. Your mission, if you choose to accept it, is to create a heat sheet for each meet we host. Previously, this has been done by manually taking each swimmer and writting their name into a Excel spreadsheet. Terrible and time consuming system. With this script, each coach will fill out a provided template in Excel and save it as a .csv file. These .csv files will be saved in the provided 'Data Files' directory. From there, you will run the 'main' application. You'll name the meet, enter the number of lanes you have (defaults to 6), and whether you want empty lanes to be left on the heat sheet (defaults to no). Your generated heat sheet will be stored in the 'pdf Outputs' directory. Hope this helps and please don't hesisate to reach out if you have any questions!
+
+Aiden Gray, 2024
+912.323.1761
+
+*** tl,dr ***
+
+- Fill out .csv files according to template
+
+- Save .csv files to 'Data Files' folder (remove 'example entires' before running)
+
+- Run 'main' application
+
+- Enter meet name, number of lanes, and empty lanes (latter two don't rigorously work yet)
+
+- Find generated heat sheet in 'pdf Outputs' folder

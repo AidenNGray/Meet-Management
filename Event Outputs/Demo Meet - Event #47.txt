@@ -1,0 +1,13 @@
+<b>Event 47 - Girls 13 & Up 50 Yard Back</b>
+-------------------------------------------------
+<b>Lane Name                 Age Team     Seed Time</b>
+-------------------------------------------------
+<b>Heat 1 of 2</b>
+   2 Devyn Parker         15  HAB      NT       
+   3 Carsen Reynolds      14  WC       NT       
+   4 Olivia Thompson      13  HAB      NT       
+<b>Heat 2 of 2</b>
+   2 Corinne Miezejeski   13  ISL      NT       
+   3 Emma Williams        13  ISL      NT       
+   4 Ruth Stout           13  HAB      NT       
+   5 Morgan Reynolds      15  WC       NT       

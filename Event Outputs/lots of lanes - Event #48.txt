@@ -1,0 +1,11 @@
+<b>Event 48 - Boys 13 & Up 50 Yard Back</b>
+-------------------------------------------------
+<b>Lane Name                 Age Team     Seed Time</b>
+-------------------------------------------------
+<b>Heat 1 of 1</b>
+  10 Ryuku Gerdes         13  EFF      NT       
+  11 Brandon Guedes       14  EFF      NT       
+  12 Aiden Gutierrez      13  LIB      NT       
+  13 Darius Popa          13  LIB      NT       
+  14 Pablo Barron         13  WC       NT       
+  15 Christian Magwood    13  WC       NT       
