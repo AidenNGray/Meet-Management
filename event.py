@@ -80,7 +80,7 @@ class Event:
 
         # This is hard coded for YMCA summer league format
         if not self._RELAY:
-            if int(self._age) >= 11 and self._stroke.lower().strip() != "im":
+            if int(self._age) >= 9 and self._stroke.lower().strip() != "im":
                 self._distance = "50"
             elif self._stroke.lower().strip() == "im":
                 self._distance = "100"
@@ -88,7 +88,7 @@ class Event:
                 self._distance = "25"
         else:
             print(int(self._age))
-            if int(self._age) < 10:
+            if int(self._age) < 9:
                 self._distance = "100"
             else:
                 self._distance = "200"
