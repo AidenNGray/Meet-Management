@@ -36,3 +36,10 @@ codegen/
 *.txt
 *.csv
 *.pdf
+
+# Build directories
+/dist/*
+/build/*
+
+# Cache files
+/__pycache__/*
