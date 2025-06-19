@@ -1,5 +1,4 @@
-('C:\\Users\\graya\\OneDrive\\Documents\\YMCA Docs\\Meet Management '
- 'Project\\build\\main\\PYZ-00.pyz',
+('C:\\Users\\graya\\MATLAB\\Projects\\Meet-Management\\build\\main\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),
@@ -661,8 +660,7 @@
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\utils.py',
    'PYMODULE'),
   ('event',
-   'C:\\Users\\graya\\OneDrive\\Documents\\YMCA Docs\\Meet Management '
-   'Project\\event.py',
+   'C:\\Users\\graya\\MATLAB\\Projects\\Meet-Management\\event.py',
    'PYMODULE'),
   ('fnmatch',
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\fnmatch.py',
@@ -809,8 +807,7 @@
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\lzma.py',
    'PYMODULE'),
   ('meet',
-   'C:\\Users\\graya\\OneDrive\\Documents\\YMCA Docs\\Meet Management '
-   'Project\\meet.py',
+   'C:\\Users\\graya\\MATLAB\\Projects\\Meet-Management\\meet.py',
    'PYMODULE'),
   ('mimetypes',
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\mimetypes.py',
@@ -945,8 +942,7 @@
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pdb.py',
    'PYMODULE'),
   ('pdfGen',
-   'C:\\Users\\graya\\OneDrive\\Documents\\YMCA Docs\\Meet Management '
-   'Project\\pdfGen.py',
+   'C:\\Users\\graya\\MATLAB\\Projects\\Meet-Management\\pdfGen.py',
    'PYMODULE'),
   ('pickle',
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pickle.py',
@@ -1939,8 +1935,7 @@
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\subprocess.py',
    'PYMODULE'),
   ('swimmer',
-   'C:\\Users\\graya\\OneDrive\\Documents\\YMCA Docs\\Meet Management '
-   'Project\\swimmer.py',
+   'C:\\Users\\graya\\MATLAB\\Projects\\Meet-Management\\swimmer.py',
    'PYMODULE'),
   ('sysconfig',
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\sysconfig.py',
@@ -1952,8 +1947,7 @@
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\tempfile.py',
    'PYMODULE'),
   ('test',
-   'C:\\Users\\graya\\OneDrive\\Documents\\YMCA Docs\\Meet Management '
-   'Project\\test.py',
+   'C:\\Users\\graya\\MATLAB\\Projects\\Meet-Management\\test.py',
    'PYMODULE'),
   ('textwrap',
    'C:\\Users\\graya\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\textwrap.py',
