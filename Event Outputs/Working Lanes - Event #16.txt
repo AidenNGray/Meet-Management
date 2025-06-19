@@ -1,8 +1,0 @@
-<b>Event 16 - Boys 11 & 12 50 Yard Free</b>
--------------------------------------------------
-Lane Name                 Age Team     Seed Time
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   1 Owen Perez           12  HAB      NT       
-   2 Bill Davis           12  HAB      NT       
-   3 Marty Miller         11  HAB      NT       

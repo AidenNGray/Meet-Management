@@ -1,9 +1,0 @@
-<b>Event 46 - Boys 11 & 12 50 Yard Back</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-  11 Lucas Mendez         12  WC       NT       
-  12 Gibson Jones         12  LIB      NT       
-  13 Landon Kessel        11  EFF      NT       
-  14 Jonathan Thompson    11  ISL      NT       

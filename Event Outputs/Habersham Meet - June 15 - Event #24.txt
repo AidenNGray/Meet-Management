@@ -1,9 +1,0 @@
-<b>Event 24 - Boys 9 & 10 25 Yard Breast</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   2 Logan Trenado        9   EFF      NT       
-   3 Jack Elliot          9   EFF      NT       
-   4 Sebastian Griffith   9   HAB      NT       
-   5 Ian Mcelveen         9   EFF      NT       

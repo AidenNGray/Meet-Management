@@ -1,8 +1,0 @@
-<b>Event 35 - Girls 11 & 12 100 Yard Im</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-  11 Saniyah Arnold-Goodman 12  LIB      NT       
-  12 Reagan Motley        12  EFF      NT       
-  13 Trinity Warren       11  WC       NT       

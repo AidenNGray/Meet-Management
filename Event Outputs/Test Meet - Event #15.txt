@@ -1,9 +1,0 @@
-<b>Event 15 - Girls 11 & 12 50 Yard Free</b>
--------------------------------------------------
-Lane Name                 Age Team     Seed Time
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   2 Carryngton James     11  ISL      NT       
-   3 Trinity Warren       11  WC       NT       
-   4 Aurora Evans         11  EFF      NT       
-   5 Soyeon Lee           11  EFF      NT       

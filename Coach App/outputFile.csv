@@ -1,8 +1,8 @@
 Participant,Age,Gender,Freestyle,Breaststroke,IM,Backstroke,Butterfly,Medley Relay,Free Relay
-"Donovan, Nina",7,Female,1,0,0,0,0,,
-"James, Carryngton",10,Female,0,0,1,0,0,,
-"Hogan, Alice Jane",9,Female,0,0,0,0,0,,
-"Hogan, Holland",12,Female,1,0,0,0,0,,
+"Donovan, Nina",7,Female,1,1,0,1,0,,
+"James, Carryngton",10,Female,0,1,1,0,1,,
+"Hogan, Alice Jane",9,Female,1,1,1,0,0,,
+"Hogan, Holland",12,Female,0,0,0,0,0,,
 "Hogan, Ivy Ann",14,Female,0,0,0,0,0,,
 "Chow, Toby",10,Male,0,0,0,0,0,,
 "Webster, Andrew",14,Male,0,0,0,0,0,,

@@ -1,8 +1,0 @@
-<b>Event 56 - Boys 11 & 12 50 Yard Fly</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   2 Lucas Mendez         12  WC       NT       
-   3 Ved  Patel           11  LIB      NT       
-   4 Gibson  Jones        12  LIB      NT       

@@ -1,8 +1,0 @@
-<b>Event 46 - Boys 11 & 12 50 Yard Back</b>
--------------------------------------------------
-Lane Name                 Age Team     Seed Time
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   2 Owen Perez           12  HAB      NT       
-   3 Marty Miller         11  HAB      NT       
-   4 Bill Davis           12  HAB      NT       

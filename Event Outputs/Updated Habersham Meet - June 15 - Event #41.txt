@@ -1,9 +1,0 @@
-<b>Event 41 - Girls 7 & 8 25 Yard Back</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   2 Raelyn Standiford    8   ISL      NT       
-   3 Leona Serpa          8   WC       NT       
-   4 Madison  Romero      8   LIB      NT       
-   5 Catherine Von Alt    7   ISL      NT       

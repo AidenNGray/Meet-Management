@@ -1,9 +1,0 @@
-<b>Event 11 - Girls 7 & 8 25 Yard Free</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-  11 Sawyer Stone         7   WC       NT       
-  12 Madison Romero       8   LIB      NT       
-  13 Leonna Serpa         8   WC       NT       
-  14 Rosemary Michaels    8   EFF      NT       

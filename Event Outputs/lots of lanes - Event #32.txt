@@ -1,8 +1,0 @@
-<b>Event 32 - Boys 7 & 8 100 Yard Im</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-  11 Viraj Patel          7   WC       NT       
-  12 Kamden Reed          7   EFF      NT       
-  13 Yuchan Choi          8   WC       NT       
