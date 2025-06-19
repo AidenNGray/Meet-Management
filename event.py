@@ -137,7 +137,10 @@ class Event:
 
         if numSwimmers > self._NUM_LANES:
             overflowSwimmers = numSwimmers % self._NUM_LANES
-            if overflowSwimmers < 3:
+            if overflowSwimmers == 0:
+                heat1Entries = self._NUM_LANES
+                heat2Entries = self._NUM_LANES
+            elif overflowSwimmers < 3:
                 heat1Entries = 3
                 heat2Entries = self._NUM_LANES - (heat1Entries - overflowSwimmers)
             else:
