@@ -1,7 +1,0 @@
-<b>Event 10 - Boys 6 & Under 25 Yard Free</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   3 Ronan Missenheim     6   EFF      NT       
-   4 Samuel Steinoff      5   ISLANDS  NT       

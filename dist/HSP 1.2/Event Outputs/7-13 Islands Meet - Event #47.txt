@@ -1,8 +1,0 @@
-<b>Event 47 - Girls 13 & Up 50 Yard Back</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   2 Carsen Reynolds      14  WC       NT       
-   3 Ryleigh Reed         13  EFF      NT       
-   4 Morgan Reynolds      15  WC       NT       

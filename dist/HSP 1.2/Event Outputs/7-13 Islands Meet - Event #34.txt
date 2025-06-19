@@ -1,7 +1,0 @@
-<b>Event 34 - Boys 9 & 10 100 Yard Im</b>
--------------------------------------------------
-<b>Lane Name                 Age Team     Seed Time</b>
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   3 Zackary Standiford   9   ISLANDS  NT       
-   4 Mason Blicka         9   WC       NT       
