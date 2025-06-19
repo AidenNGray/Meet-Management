@@ -1,8 +1,0 @@
-<b>Event 10 - Boys 6 & Under 25 Yard Free</b>
--------------------------------------------------
-Lane Name                 Age Team     Seed Time
--------------------------------------------------
-<b>Heat 1 of 1</b>
-   1 Joe Smith            5   HAB      NT       
-   2 John Johnson         6   HAB      NT       
-   3 Aidan Hernandez      5   HAB      NT       
