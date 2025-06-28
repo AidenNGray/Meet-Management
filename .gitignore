@@ -38,8 +38,8 @@ codegen/
 *.pdf
 
 # Build directories
-/dist/*
-/build/*
+dist/
+build/
 
 # Cache files
-/__pycache__/*
+__pycache__/
