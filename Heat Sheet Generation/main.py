@@ -76,6 +76,16 @@ def inputsAndGeneration():
     generateHeatSheet(meetName)
     print(f"{meetName}.pdf successfully generated in 'pdf Outputs' directory", end= '\n\n')
     
+    if config.get("output", {}).get("cleanup_text_files", False):
+        import os
+        try:
+            for filename in os.listdir("Event Outputs"):
+                if filename.startswith(meetName) and filename.endswith(".txt"):
+                    os.remove(os.path.join("Event Outputs", filename))
+            print("Temporary text files have been cleaned up.\n")
+        except Exception as e:
+            print(f"Failed to clean up text files: {e}\n")
+    
 
 if __name__ == "__main__":
     title()
