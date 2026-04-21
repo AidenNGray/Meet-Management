@@ -221,6 +221,22 @@ class Event:
                 ln = f"{currentLane:4} {name:20} {age:3} {team:8} {'NT':9}"
                 currentLane += 1
                 print(ln)
+                
+                if self._RELAY and hasattr(swimmer, 'getSwimmers'):
+                    swimmers = swimmer.getSwimmers()
+                    if swimmers:
+                        def trunc(n):
+                            return f"{n[:14]}-" if len(n) > 15 else n
+                        
+                        s1 = trunc(swimmers[0]) if len(swimmers) > 0 else ""
+                        s2 = trunc(swimmers[1]) if len(swimmers) > 1 else ""
+                        s3 = trunc(swimmers[2]) if len(swimmers) > 2 else ""
+                        s4 = trunc(swimmers[3]) if len(swimmers) > 3 else ""
+                        
+                        if s1 or s2:
+                            print(f"      1) {s1:<15} 2) {s2:<15}")
+                        if s3 or s4:
+                            print(f"      3) {s3:<15} 4) {s4:<15}")
             if self._EMPTY_LANES:
                 while currentLane <= self._NUM_LANES:
                     print(f"{currentLane:4}")

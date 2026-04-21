@@ -121,16 +121,20 @@ class Relay:
     Stores the team name and team ID.
     """
 
-    def __init__(self, relayTeam : str, teamID : str) -> None:
+    def __init__(self, relayTeam : str, teamID : str, identifier : str = "", swimmers : list = None) -> None:
         """
         Initializes a Relay object.
 
         Args:
             relayTeam (str): The name of the relay team.
             teamID (str): The short ID for the team.
+            identifier (str, optional): The relay identifier (e.g. 'A', 'B'). Defaults to "".
+            swimmers (list, optional): List of swimmer names in the relay. Defaults to None.
         """
         self._team = relayTeam
         self._teamID = teamID
+        self._identifier = identifier
+        self._swimmers = swimmers if swimmers is not None else []
 
 
     def __str__(self) -> str:
@@ -158,7 +162,15 @@ class Relay:
         """
         Returns the full name of the relay team.
         """
+        if self._identifier:
+            return f"{self._team} {self._identifier}"
         return self._team
+    
+    def getSwimmers(self) -> list:
+        """
+        Returns the list of swimmers in the relay.
+        """
+        return self._swimmers
     
 
     def getAge(self) -> str:

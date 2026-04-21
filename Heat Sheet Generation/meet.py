@@ -25,10 +25,11 @@ class Meet:
         """
         self.MEET_NAME = meetName
         self._config = config
+        self._idToSwimmer = {} # dictionary of swimmers mapped to ID
+        self._numToEvent = {} # dictionary of event numbers to event objects
         self._numLanes = numLanes
         self._emptyLanes = emptyLanes
-        self._idToSwimmer = {}
-        self._numToEvent = {}
+        self._importedRelays = [] # List of parsed relay dicts
 
 
     def __str__(self) -> str:
@@ -41,18 +42,47 @@ class Meet:
         """
         with open(filename, 'r') as file:
             csvReader = csv.reader(file)
-            lineCount = 0
+            next(csvReader) # skips header
             for row in csvReader:
-                if lineCount != 0:
-                    swimmerTeam = row[4].lower().strip()
-                    randomDigits = ""
-                    for digit in range(10): # Random generation of SwimIDs. May be useful in the future for time tracking, etc.
-                        random_letter = random.choice(string.ascii_letters)
-                        randomDigits += random_letter
-                    swimmerID = swimmerTeam + randomDigits
+                if row:
+                    swimmerID = "".join(random.choices(string.ascii_letters, k=5))
                     newSwimmer = Swimmer(swimmerID, row)
                     self._idToSwimmer.update({swimmerID:newSwimmer})
-                lineCount += 1
+
+    def importRelays(self, filename: str) -> None:
+        """
+        Takes a .csv file and imports relay entries.
+        Format: Team,Age Group,Gender,Stroke,Relay Identifier,Swimmer 1,Swimmer 2,Swimmer 3,Swimmer 4
+        """
+        with open(filename, 'r') as file:
+            csvReader = csv.reader(file)
+            next(csvReader) # Skip header
+            for row in csvReader:
+                if not row or not row[0]: continue
+                team_name = row[0].strip()
+                age_group = row[1].strip()
+                gender = row[2].strip()
+                stroke = row[3].strip()
+                identifier = row[4].strip()
+                swimmers = [s.strip() for s in row[5:] if s.strip()]
+                
+                # Look up teamID from config
+                team_id = "unknown"
+                for t in self._config.get("teams", []):
+                    if t["name"].lower() == team_name.lower():
+                        team_id = t["id"]
+                        break
+                
+                relay_data = {
+                    "team": team_name,
+                    "teamID": team_id,
+                    "age_group": age_group,
+                    "gender": gender,
+                    "stroke": stroke,
+                    "identifier": identifier,
+                    "swimmers": swimmers
+                }
+                self._importedRelays.append(relay_data)
 
         #print(f"There are {len(self._idToSwimmer)} swimmers imported")
 
@@ -97,19 +127,33 @@ class Meet:
         """
         Generates relay events based on teams in config.
         """
-        relayObjects = []
-        for team in self._config["teams"]:
-            newRelay = Relay(team["name"], team["id"])
-            relayObjects.append(newRelay)
         self._relayAgeGroups = self._config["age_groups"]["relay"]
         numEvents = len(self._relayAgeGroups) * 2
         eventNumber = startNumber
         ageIndex = -1
+        
+        girls_start_odd = self._config["events"].get("girls_start_odd", True)
+        
         for event in range(numEvents):
             if eventNumber % 2 == 1:
                 ageIndex += 1
             ageList = self._relayAgeGroups[ageIndex].split()
             age = ageList[0]
+            
+            if girls_start_odd:
+                gender_str = "Girls" if eventNumber % 2 == 1 else "Boys"
+            else:
+                gender_str = "Boys" if eventNumber % 2 == 1 else "Girls"
+                
+            relayObjects = []
+            for r in self._importedRelays:
+                if (r["age_group"].lower() == self._relayAgeGroups[ageIndex].lower() and 
+                    r["gender"].lower() == gender_str.lower() and 
+                    r["stroke"].lower() == stroke.lower()):
+                    
+                    newRelay = Relay(r["team"], r["teamID"], r["identifier"], r["swimmers"])
+                    relayObjects.append(newRelay)
+                    
             eventData = [eventNumber,age,f"{stroke} Relay"]
             newEvent = Event(eventData, self.MEET_NAME, True, self._config, relayObjects, numLanes=self._numLanes, emptyLanes=self._emptyLanes)
             newEvent.setAgeGroup(self._relayAgeGroups[ageIndex])

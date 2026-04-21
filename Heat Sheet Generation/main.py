@@ -62,9 +62,14 @@ def inputsAndGeneration():
 
     pause = input("Confirm all entry files are in 'Data Files' directory by clicking enter.")
     for filename in listdir('./Data Files'):
-        if filename != "Entry Template.csv":
+        if "template" in filename.lower():
+            continue
+        if "relay" in filename.lower() and filename.endswith(".csv"):
+            meetObject.importRelays(f"Data Files/{filename}")
+            print(f"{filename} (Relays) imported")
+        elif filename.endswith(".csv"):
             meetObject.importFile(f"Data Files/{filename}")
-            print(f"{filename} imported")
+            print(f"{filename} (Swimmers) imported")
     print()
 
     pause = input("Press enter to generate.")
