@@ -2,6 +2,7 @@
 # by Aiden Gray
 # Last modified 6/3/2024
 
+import json
 from pdfGen import generateHeatSheet
 from meet import Meet
 from os import listdir
@@ -10,6 +11,9 @@ LINE_WIDTH = 100
 
 
 def main():
+    """
+    Main execution loop for the Meet Management program.
+    """
     inputsAndGeneration()
     pause = input("Enter 1 to create a new heat sheet or any other input to exit: ")
     if pause == '1':
@@ -17,6 +21,9 @@ def main():
 
 
 def title():
+    """
+    Prints the title and instructions for the program.
+    """
     # Title (make pretty at some point)
     print('-' * LINE_WIDTH,end='\n\n')
     print("Summer League Heat Sheet Generator".center(LINE_WIDTH), end='\n\n')
@@ -31,6 +38,9 @@ def title():
 
 
 def inputsAndGeneration():
+    """
+    Collects inputs from the user, imports data, and generates the heat sheet.
+    """
     # User input
     meetName = input("Enter the meet name: ")
     numLanes = int(input("How many lanes are available? "))
@@ -44,7 +54,11 @@ def inputsAndGeneration():
             emptyLanes = False
             break
         print("Invalid input. Please enter '1' or '0'")
-    meetObject = Meet(meetName, numLanes, emptyLanes)
+        
+    with open("config.json", "r") as f:
+        config = json.load(f)
+        
+    meetObject = Meet(meetName, config, numLanes, emptyLanes)
 
     pause = input("Confirm all entry files are in 'Data Files' directory by clicking enter.")
     for filename in listdir('./Data Files'):

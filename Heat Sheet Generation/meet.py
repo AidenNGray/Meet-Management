@@ -9,13 +9,22 @@ from event import Event
 
 class Meet:
     """
-    I have no idea what this will do
+    Main organizational class for a swim meet.
+    Aggregates swimmers, organizes events, and handles the creation of output files.
     """
 
-    def __init__(self, meetName : str, numLanes : int = 6, emptyLanes : bool = False) -> None:
+    def __init__(self, meetName : str, config : dict, numLanes : int = 6, emptyLanes : bool = False) -> None:
+        """
+        Initializes a Meet object.
+
+        Args:
+            meetName (str): Name of the meet.
+            config (dict): The configuration dictionary loaded from config.json.
+            numLanes (int): The number of lanes available for the meet.
+            emptyLanes (bool): Whether to include empty lanes in the output.
+        """
         self.MEET_NAME = meetName
-        self._MEDLEY = True
-        self._FREE = True
+        self._config = config
         self._numLanes = numLanes
         self._emptyLanes = emptyLanes
         self._idToSwimmer = {}
@@ -52,13 +61,16 @@ class Meet:
         """
         Generates event objects for each event based on parameters
         """
-        orderOfEvents = ["free", "breast", "im", "back", "fly"]
-        strokeNames = ["freestyle", "breaststroke", "individual medley", "backstroke", "butterfly"]
-        self.ageGroups = ["6 & under", "7 & 8", "9 & 10", "11 & 12", "13 & up"]
+        orderOfEvents = self._config["events"]["order"]
+        strokeNames = self._config["events"]["stroke_names"]
+        self.ageGroups = self._config["age_groups"]["individual"]
         eventNumber = 1
 
-        if self._MEDLEY:
-            eventNumber = self._generateRelays(eventNumber, "medley")
+        relays = self._config["events"].get("relays", [])
+
+        for relay in relays:
+            if relay.get("position") == "start":
+                eventNumber = self._generateRelays(eventNumber, relay.get("stroke"))
 
         for strokeIndex in range(len(orderOfEvents)):
             numEvents = len(self.ageGroups) * 2
@@ -71,26 +83,25 @@ class Meet:
                 eventData = [eventNumber,age,orderOfEvents[strokeIndex]]
                 # TODO: Determine which swimmer objects need to go in this event
                 # Probably write a function for this for clarity
-                newEvent = Event(eventData, self.MEET_NAME, False, numLanes= self._numLanes)
+                newEvent = Event(eventData, self.MEET_NAME, False, self._config, numLanes= self._numLanes)
                 newEvent.setAgeGroup(self.ageGroups[ageIndex])
                 self._checkSwimmers(newEvent, orderOfEvents[strokeIndex], strokeNames[strokeIndex])
                 self._numToEvent.update({eventNumber:newEvent})
                 eventNumber += 1
 
-        if self._FREE:
-            eventNumber = self._generateRelays(eventNumber, "free")
-
-        
+        for relay in relays:
+            if relay.get("position") == "end":
+                eventNumber = self._generateRelays(eventNumber, relay.get("stroke"))
 
     def _generateRelays(self, startNumber : int, stroke : str) -> int:
-        # This will be hard coded to start with a medley relay and end with a free relay
-        RELAY_TEAMS = ["Effingham", "Habersham", "Islands", "West Chatham", "Liberty"]
-        TEAM_IDS = ['eff', 'hab', 'isl', 'wc', 'lib']
+        """
+        Generates relay events based on teams in config.
+        """
         relayObjects = []
-        for team in range(len(RELAY_TEAMS)):
-            newRelay = Relay(RELAY_TEAMS[team], TEAM_IDS[team])
+        for team in self._config["teams"]:
+            newRelay = Relay(team["name"], team["id"])
             relayObjects.append(newRelay)
-        self._relayAgeGroups = ["8 & under", "9 & 10", "11 & 12", "13 & up"]
+        self._relayAgeGroups = self._config["age_groups"]["relay"]
         numEvents = len(self._relayAgeGroups) * 2
         eventNumber = startNumber
         ageIndex = -1
@@ -100,7 +111,7 @@ class Meet:
             ageList = self._relayAgeGroups[ageIndex].split()
             age = ageList[0]
             eventData = [eventNumber,age,f"{stroke} Relay"]
-            newEvent = Event(eventData, self.MEET_NAME, True, relayObjects)
+            newEvent = Event(eventData, self.MEET_NAME, True, self._config, relayObjects)
             newEvent.setAgeGroup(self._relayAgeGroups[ageIndex])
             self._numToEvent.update({eventNumber:newEvent})
             eventNumber += 1
@@ -125,15 +136,19 @@ class Meet:
                 gender = 'girls'
 
             age = int(swimmerData[2]) # This was a design oversight
-            if age <= 6:         # Need to fix if changing age groups
-                effectiveAge = 6
-            elif age > 6 and age < 13:
-                if age % 2 == 0:
+            min_age = self._config["age_groups"]["effective_age"]["min_age"]
+            max_age = self._config["age_groups"]["effective_age"]["max_age"]
+            group_by = self._config["age_groups"]["effective_age"].get("group_by", 2)
+            
+            if age <= min_age:
+                effectiveAge = min_age
+            elif min_age < age < max_age:
+                if age % group_by == 0:
                     effectiveAge = age - 1
                 else:
                     effectiveAge = age
             else:
-                effectiveAge = 13
+                effectiveAge = max_age
 
             #print("Swimmer data:", swimmerData)
             if eventData[1] == gender and eventData[2] == str(effectiveAge):
@@ -150,7 +165,10 @@ class Meet:
 
 
 def testMeet():
-    testMeet = Meet("Test Meet")
+    import json
+    with open("config.json", "r") as f:
+        config = json.load(f)
+    testMeet = Meet("Test Meet", config)
     testMeet.importFile("Data Files/Test File.csv")
     testMeet.generateEvents()
     testMeet.generateTxtFiles()

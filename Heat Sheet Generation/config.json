@@ -1,0 +1,44 @@
+{
+  "events": {
+    "order": ["free", "breast", "im", "back", "fly"],
+    "stroke_names": ["freestyle", "breaststroke", "individual medley", "backstroke", "butterfly"],
+    "girls_start_odd": true,
+    "distances": {
+      "standard": "50",
+      "short": "25",
+      "im": "100",
+      "age_threshold": 9
+    },
+    "relays": [
+      {
+        "stroke": "medley",
+        "position": "start"
+      },
+      {
+        "stroke": "free",
+        "position": "end"
+      }
+    ],
+    "relay_distances": {
+      "standard": "200",
+      "short": "100",
+      "age_threshold": 9
+    }
+  },
+  "age_groups": {
+    "individual": ["6 & under", "7 & 8", "9 & 10", "11 & 12", "13 & up"],
+    "relay": ["8 & under", "9 & 10", "11 & 12", "13 & up"],
+    "effective_age": {
+      "min_age": 6,
+      "max_age": 13,
+      "group_by": 2
+    }
+  },
+  "teams": [
+    {"name": "Effingham", "id": "eff"},
+    {"name": "Habersham", "id": "hab"},
+    {"name": "Islands", "id": "isl"},
+    {"name": "West Chatham", "id": "wc"},
+    {"name": "Liberty", "id": "lib"}
+  ]
+}

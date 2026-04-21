@@ -87,8 +87,6 @@ class Swimmer:
         """
         Returns 'True' if registered for given event, else returns 'False'
         """
-        #cleanEvent = event.lower().strip() # Irrelevant due to source being hard coded list
-
         if self.event1_ == event or self.event1_ == strokeName:
             return True
         elif self.event2_ == event or self.event2_ == strokeName:
@@ -118,28 +116,55 @@ class Swimmer:
 
 
 class Relay:
+    """
+    Object representing a relay team.
+    Stores the team name and team ID.
+    """
+
     def __init__(self, relayTeam : str, teamID : str) -> None:
+        """
+        Initializes a Relay object.
+
+        Args:
+            relayTeam (str): The name of the relay team.
+            teamID (str): The short ID for the team.
+        """
         self._team = relayTeam
         self._teamID = teamID
 
 
     def __str__(self) -> str:
+        """
+        Returns a string representation of the relay team.
+        """
         return f"{self._team} relay team"
 
     
     def getSwimID(self) -> str:
+        """
+        Returns the team ID.
+        """
         return self._teamID
     
 
     def getTeam(self) -> str:
+        """
+        Returns the capitalized team ID.
+        """
         return self._teamID.upper()
     
 
     def getName(self) -> str:
+        """
+        Returns the full name of the relay team.
+        """
         return self._team
     
 
     def getAge(self) -> str:
+        """
+        Returns an empty string for the age of a relay team.
+        """
         return ""
     
 

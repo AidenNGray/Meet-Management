@@ -13,22 +13,26 @@ class Event:
     Data input formatted as shown in setEventData docstring
     """
 
-    def __init__(self, dataList : list, meetName : str, relayEvent : bool, swimmerList : list = [], numLanes : int = 6, emptyLanes : bool = False) -> None:
+    def __init__(self, dataList : list, meetName : str, relayEvent : bool, config : dict, swimmerList : list = None, numLanes : int = 6, emptyLanes : bool = False) -> None:
         """
-        _summary_
+        Initializes an Event object.
 
         Args:
             dataList (list): To be formatted as '[event number, age, stroke]'
-            swimmerList (list): List of swimmer objects registered for event or relay teams if relay event
             meetName (str): Used for filename purposes
             relayEvent (bool): Indicates a relay event
+            config (dict): Configuration dictionary containing event parameters.
+            swimmerList (list): List of swimmer objects registered for event or relay teams if relay event
             numLanes (int): Number of lanes to be used for seeding
             emptyLanes (bool): Indicates whether unused lanes should be displayed (True) or left off (False)
         """
+        if swimmerList is None:
+            swimmerList = []
         self._NUM_LANES = numLanes
         self._MEET_NAME = meetName
         self._RELAY = relayEvent
         self._EMPTY_LANES = emptyLanes
+        self._config = config
         self.setEventData(dataList)
         self._eventSwimmers = {}
 
@@ -69,7 +73,7 @@ class Event:
         self._stroke = data[2]
 
         # Determines gender based on event number
-        GIRLS_START = True
+        GIRLS_START = self._config["events"]["girls_start_odd"]
         if GIRLS_START and int(self._number) % 2 == 1:
             self._gender = "girls"
         elif not GIRLS_START and int(self._number) % 2 == 0:
@@ -78,20 +82,22 @@ class Event:
             self._gender = "boys"
             
 
-        # This is hard coded for YMCA summer league format
+        # Distance logic based on config
         if not self._RELAY:
-            if int(self._age) >= 9 and self._stroke.lower().strip() != "im":
-                self._distance = "50"
+            threshold = self._config["events"]["distances"]["age_threshold"]
+            if int(self._age) >= threshold and self._stroke.lower().strip() != "im":
+                self._distance = self._config["events"]["distances"]["standard"]
             elif self._stroke.lower().strip() == "im":
-                self._distance = "100"
+                self._distance = self._config["events"]["distances"]["im"]
             else:
-                self._distance = "25"
+                self._distance = self._config["events"]["distances"]["short"]
         else:
             print(int(self._age))
-            if int(self._age) < 9:
-                self._distance = "100"
+            threshold = self._config["events"]["relay_distances"]["age_threshold"]
+            if int(self._age) < threshold:
+                self._distance = self._config["events"]["relay_distances"]["short"]
             else:
-                self._distance = "200"
+                self._distance = self._config["events"]["relay_distances"]["standard"]
 
 
     def addSwimmer(self, swimmer : object) -> bool:
@@ -255,7 +261,10 @@ def testEvent():
 
     eventData = ["3", "11", "free"]
     swimmers = [swimmerBoi1, swimmerBoi2, swimmerBoi3, swimmerBoi4, swimmerBoi5, swimmerBoi6, swimmerBoi7, swimmerBoi8]
-    event3 = Event(eventData, "Test Meet", False, swimmers)
+    import json
+    with open("config.json", "r") as f:
+        config = json.load(f)
+    event3 = Event(eventData, "Test Meet", False, config, swimmers)
     print(event3.getEventData())
     #print(event3)
     #event3.addSwimmers(swimmers)
