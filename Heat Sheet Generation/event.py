@@ -66,8 +66,6 @@ class Event:
         Sets event parameters. Input listed formatted as below:
         '[event number, age, stroke]'
         """
-        print(data)
-        print(data[1])
         self._number = data[0]
         self._age = data[1]
         self._stroke = data[2]
@@ -224,7 +222,7 @@ class Event:
                 currentLane += 1
                 print(ln)
             if self._EMPTY_LANES:
-                while currentLane != self._NUM_LANES:
+                while currentLane <= self._NUM_LANES:
                     print(f"{currentLane:4}")
                     currentLane += 1
             heatNum += 1

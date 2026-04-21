@@ -83,7 +83,7 @@ class Meet:
                 eventData = [eventNumber,age,orderOfEvents[strokeIndex]]
                 # TODO: Determine which swimmer objects need to go in this event
                 # Probably write a function for this for clarity
-                newEvent = Event(eventData, self.MEET_NAME, False, self._config, numLanes= self._numLanes)
+                newEvent = Event(eventData, self.MEET_NAME, False, self._config, numLanes=self._numLanes, emptyLanes=self._emptyLanes)
                 newEvent.setAgeGroup(self.ageGroups[ageIndex])
                 self._checkSwimmers(newEvent, orderOfEvents[strokeIndex], strokeNames[strokeIndex])
                 self._numToEvent.update({eventNumber:newEvent})
@@ -111,7 +111,7 @@ class Meet:
             ageList = self._relayAgeGroups[ageIndex].split()
             age = ageList[0]
             eventData = [eventNumber,age,f"{stroke} Relay"]
-            newEvent = Event(eventData, self.MEET_NAME, True, self._config, relayObjects)
+            newEvent = Event(eventData, self.MEET_NAME, True, self._config, relayObjects, numLanes=self._numLanes, emptyLanes=self._emptyLanes)
             newEvent.setAgeGroup(self._relayAgeGroups[ageIndex])
             self._numToEvent.update({eventNumber:newEvent})
             eventNumber += 1
