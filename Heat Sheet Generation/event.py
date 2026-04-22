@@ -276,19 +276,24 @@ class Event:
             heatNum += 1
 
     
-    def exportEvent(self):
+    def exportEvent(self, output_dir: str = "Event Outputs/"):
         """
         Generates a .txt file with the event in heat sheet format
         """
+        import os
         filename = f"{self._MEET_NAME} - Event #{self._number}"
         fileExt = ".txt"
-        filePath = "Event Outputs/"
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
+
+        full_path = os.path.join(output_dir, f"{filename}{fileExt}")
 
         temp = sys.stdout
-        sys.stdout = open(f'{filePath}{filename}{fileExt}','w')
+        sys.stdout = open(full_path, 'w')
         self.printEvent()
         sys.stdout = temp
-        print(f"Event #{self._number} has been exported")      
+        print(f"Event #{self._number} has been exported to {output_dir}")      
 
 
 def testEvent():

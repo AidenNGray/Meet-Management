@@ -233,13 +233,13 @@ class Meet:
                     eventObject.addSwimmer(swimmerObject)
 
 
-    def generateTxtFiles(self) -> None:
+    def generateTxtFiles(self, output_dir: str = "Event Outputs/") -> None:
         print_empty_events = self._config.get("events", {}).get("print_empty_events", False)
         for key in self._numToEvent:
             event = self._numToEvent[key]
             if not print_empty_events and len(event.getSwimmers()) == 0:
                 continue
-            event.exportEvent()
+            event.exportEvent(output_dir=output_dir)
 
 
 def testMeet():

@@ -131,6 +131,7 @@ def generateHeatSheet(meetName : str = 'Test Meet', input_dir: str = 'Event Outp
     pdf_doc = standardHeatSheet(pdf_path, meetName=meetName)
     pdf_doc.build(meetData)
     print(f"Successfully generated PDF: {pdf_path}")
+    return pdf_path
 
 
 if __name__ == "__main__":

@@ -37,6 +37,40 @@ def title():
     print("Review each .csv file to ensure compliance with required formatting (see 'READ Me.txt')".center(LINE_WIDTH), end= '\n\n')
 
 
+def generate_meet_pdf(
+    meetName: str,
+    numLanes: int,
+    emptyLanes: bool,
+    swimmer_files: list[str],
+    relay_files: list[str],
+    temp_dir: str = "Event Outputs/",
+    pdf_out_dir: str = "pdf Outputs/"
+) -> str:
+    """
+    Programmatic entry point for generating a meet pdf.
+    Returns the absolute path to the generated PDF.
+    """
+    import os
+    with open("config.json", "r") as f:
+        config = json.load(f)
+        
+    meetObject = Meet(meetName, config, numLanes, emptyLanes)
+
+    for filename in relay_files:
+        meetObject.importRelays(filename)
+        print(f"{filename} (Relays) imported")
+        
+    for filename in swimmer_files:
+        meetObject.importFile(filename)
+        print(f"{filename} (Swimmers) imported")
+
+    print(f"Generating events for {meetName}...")
+    meetObject.generateEvents()
+    meetObject.generateTxtFiles(output_dir=temp_dir)
+    
+    pdf_path = generateHeatSheet(meetName, input_dir=temp_dir, output_dir=pdf_out_dir)
+    return pdf_path
+
 def inputsAndGeneration():
     """
     Collects inputs from the user, imports data, and generates the heat sheet.
@@ -55,32 +89,30 @@ def inputsAndGeneration():
             break
         print("Invalid input. Please enter '1' or '0'")
         
-    with open("config.json", "r") as f:
-        config = json.load(f)
-        
-    meetObject = Meet(meetName, config, numLanes, emptyLanes)
-
+    swimmer_files = []
+    relay_files = []
+    
     pause = input("Confirm all entry files are in 'Data Files' directory by clicking enter.")
     for filename in listdir('./Data Files'):
         if "template" in filename.lower():
             continue
+        filepath = f"Data Files/{filename}"
         if "relay" in filename.lower() and filename.endswith(".csv"):
-            meetObject.importRelays(f"Data Files/{filename}")
-            print(f"{filename} (Relays) imported")
+            relay_files.append(filepath)
         elif filename.endswith(".csv"):
-            meetObject.importFile(f"Data Files/{filename}")
-            print(f"{filename} (Swimmers) imported")
+            swimmer_files.append(filepath)
+            
     print()
-
     pause = input("Press enter to generate.")
     print()
     print("Generating .....".center(LINE_WIDTH))
     print()
-    meetObject.generateEvents()
-    meetObject.generateTxtFiles()
-    generateHeatSheet(meetName)
+    
+    pdf_path = generate_meet_pdf(meetName, numLanes, emptyLanes, swimmer_files, relay_files)
     print(f"{meetName}.pdf successfully generated in 'pdf Outputs' directory", end= '\n\n')
     
+    with open("config.json", "r") as f:
+        config = json.load(f)
     if config.get("output", {}).get("cleanup_text_files", False):
         import os
         try:
