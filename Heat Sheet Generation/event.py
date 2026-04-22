@@ -34,7 +34,10 @@ class Event:
         self._EMPTY_LANES = emptyLanes
         self._config = config
         self.setEventData(dataList)
-        self._eventSwimmers = {}
+        self._eventSwimmers = {} # Dictionary storing Swimmer objects in the event
+        self._heatArray = [] # Array of Heats (Heat is an array of swimmer objects)
+        self._combinedStartLane = None
+        self._combinedWith = None
 
         if not relayEvent:
             self.addSwimmers(swimmerList)
@@ -90,7 +93,6 @@ class Event:
             else:
                 self._distance = self._config["events"]["distances"]["short"]
         else:
-            print(int(self._age))
             threshold = self._config["events"]["relay_distances"]["age_threshold"]
             if int(self._age) < threshold:
                 self._distance = self._config["events"]["relay_distances"]["short"]
@@ -121,6 +123,20 @@ class Event:
     def setAgeGroup(self, ageGroup : str) -> None:
         self._ageGroup = ageGroup
 
+    
+    def getSwimmers(self) -> list:
+        """
+        Returns list of swimmer objects registered for event
+        """
+        return self._eventSwimmers
+        
+    def setCombinedLanes(self, startLane: int, combinedWith: int) -> None:
+        """
+        Explicitly sets the start lane for this event when combined with another event
+        and records the event number it is combined with.
+        """
+        self._combinedStartLane = startLane
+        self._combinedWith = combinedWith
     
     def getSwimmerIDs(self) -> list:
         """
@@ -200,11 +216,27 @@ class Event:
         print("-" * CELL_WIDTH)
 
         heatNum = 1
+        
+        if not self._heatArray and self._EMPTY_LANES:
+            print(f"<b>Heat 1 of 1</b>")
+            currentLane = 1
+            while currentLane <= self._NUM_LANES:
+                print(f"{currentLane:4}")
+                currentLane += 1
+                
         for heat in self._heatArray:
-            print(f"<b>Heat {heatNum} of {len(self._heatArray)}</b>")
-            middleLane = self._NUM_LANES // 2
-            laneModifier = (len(heat) - 1) // 2
-            startLane = middleLane - laneModifier
+            if self._combinedWith is not None:
+                print(f"<b>Heat {heatNum} of {len(self._heatArray)} (Combined with Event {self._combinedWith})</b>")
+            else:
+                print(f"<b>Heat {heatNum} of {len(self._heatArray)}</b>")
+                
+            if self._combinedStartLane is not None:
+                startLane = self._combinedStartLane
+            else:
+                middleLane = self._NUM_LANES // 2
+                laneModifier = (len(heat) - 1) // 2
+                startLane = middleLane - laneModifier
+                
             currentLane = 1
             if self._EMPTY_LANES:
                 while currentLane != startLane:

@@ -122,6 +122,8 @@ class Meet:
         for relay in relays:
             if relay.get("position") == "end":
                 eventNumber = self._generateRelays(eventNumber, relay.get("stroke"))
+                
+        self._combineSmallEvents()
 
     def _generateRelays(self, startNumber : int, stroke : str) -> int:
         """
@@ -162,6 +164,35 @@ class Meet:
 
         return eventNumber
 
+    def _combineSmallEvents(self) -> None:
+        """
+        Loops through events in pairs and combines them into a single heat
+        if their total number of swimmers + 1 <= numLanes.
+        """
+        if not self._config.get("events", {}).get("combine_small_events", False):
+            return
+            
+        maxEvent = max(self._numToEvent.keys()) if self._numToEvent else 0
+        for i in range(1, maxEvent, 2):
+            event1 = self._numToEvent.get(i)
+            event2 = self._numToEvent.get(i + 1)
+            if not event1 or not event2:
+                continue
+                
+            swimmers1 = len(event1.getSwimmerIDs())
+            swimmers2 = len(event2.getSwimmerIDs())
+            
+            if swimmers1 == 0 or swimmers2 == 0:
+                continue
+                
+            if swimmers1 + swimmers2 <= self._numLanes - 1:
+                total_lanes = swimmers1 + 1 + swimmers2
+                middle_lane = self._numLanes // 2
+                start_lane1 = middle_lane - (total_lanes - 1) // 2
+                start_lane2 = start_lane1 + swimmers1 + 1
+                
+                event1.setCombinedLanes(start_lane1, i + 1)
+                event2.setCombinedLanes(start_lane2, i)
 
     def _checkSwimmers(self, eventObject : object, stroke : str, strokeName : str) -> None:
         """
@@ -203,9 +234,12 @@ class Meet:
 
 
     def generateTxtFiles(self) -> None:
+        print_empty_events = self._config.get("events", {}).get("print_empty_events", False)
         for key in self._numToEvent:
-           #self._numToEvent[key].printEvent()
-            self._numToEvent[key].exportEvent()
+            event = self._numToEvent[key]
+            if not print_empty_events and len(event.getSwimmers()) == 0:
+                continue
+            event.exportEvent()
 
 
 def testMeet():
