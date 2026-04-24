@@ -43,3 +43,6 @@ build/
 
 # Cache files
 __pycache__/
+
+# Shell scripts
+*.sh
