@@ -46,3 +46,6 @@ __pycache__/
 
 # Shell scripts
 *.sh
+
+# Python virtual environment
+.venv/
