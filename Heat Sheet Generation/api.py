@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, BackgroundTasks, HTTPException, Form
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import tempfile
 import os
@@ -14,6 +15,15 @@ import models
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Meet Management API", description="API for generating heat sheet PDFs")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # For development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def cleanup_temp_dir(dir_path: str):
     """Removes a temporary directory and all its contents."""
