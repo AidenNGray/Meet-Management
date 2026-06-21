@@ -10,6 +10,17 @@ class Team(Base):
     short_id = Column(String, index=True)
 
     swimmers = relationship("Swimmer", back_populates="team")
+    users = relationship("User", back_populates="team")
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(String, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    role = Column(String) # 'admin' or 'coach'
+    team_id = Column(String, ForeignKey("teams.id"), nullable=True)
+
+    team = relationship("Team", back_populates="users")
 
 class Swimmer(Base):
     __tablename__ = "swimmers"
@@ -20,6 +31,7 @@ class Swimmer(Base):
     age = Column(Integer)
     gender = Column(String) # 'M' or 'F' (or 'm'/'f')
     team_id = Column(String, ForeignKey("teams.id"))
+    is_active = Column(Boolean, default=True)
 
     team = relationship("Team", back_populates="swimmers")
     entries = relationship("Entry", back_populates="swimmer")
@@ -32,6 +44,7 @@ class Meet(Base):
     date = Column(Date, nullable=True)
     num_lanes = Column(Integer, default=6)
     empty_lanes = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=False)
 
     entries = relationship("Entry", back_populates="meet")
     relay_entries = relationship("RelayEntry", back_populates="meet")

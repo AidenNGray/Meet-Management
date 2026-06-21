@@ -5,10 +5,12 @@ import { auth } from '../firebase';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   const handleLogout = async () => {
     try {
       await auth.signOut();
+      localStorage.removeItem('user');
       navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error);
@@ -36,7 +38,9 @@ export default function Dashboard() {
       <div className="glass-panel" style={{ width: '260px', padding: '2rem 1rem', display: 'flex', flexDirection: 'column', borderRight: '1px solid var(--border-color)', borderRadius: '0', borderLeft: 'none', borderTop: 'none', borderBottom: 'none' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0 1rem', marginBottom: '3rem' }}>
           <Activity size={32} color="var(--primary-color)" />
-          <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700 }}>Coach Portal</h2>
+          <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700 }}>
+            {user.role === 'admin' ? 'Admin Portal' : 'Coach Portal'}
+          </h2>
         </div>
 
         <nav style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -48,10 +52,20 @@ export default function Dashboard() {
             <FileText size={20} />
             Heat Sheets
           </NavLink>
-          <NavLink to="/dashboard/rosters" style={navLinkStyle}>
-            <Users size={20} />
-            Rosters
-          </NavLink>
+          
+          {user.role === 'admin' && (
+            <NavLink to="/dashboard/admin" style={navLinkStyle}>
+              <Users size={20} />
+              Admin
+            </NavLink>
+          )}
+
+          {user.role === 'coach' && (
+            <NavLink to="/dashboard/coach" style={navLinkStyle}>
+              <Users size={20} />
+              Roster
+            </NavLink>
+          )}
         </nav>
 
         <button onClick={handleLogout} className="btn btn-outline" style={{ display: 'flex', justifyContent: 'flex-start', color: 'var(--text-muted)', border: 'none' }}>

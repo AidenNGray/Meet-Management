@@ -4,6 +4,8 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Meets from './components/Meets';
 import GenerateHeatSheet from './components/GenerateHeatSheet';
+import AdminDashboard from './components/AdminDashboard';
+import CoachDashboard from './components/CoachDashboard';
 
 function App() {
   return (
@@ -13,7 +15,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="meets" element={<Meets />} />
           <Route path="generate" element={<GenerateHeatSheet />} />
-          <Route path="rosters" element={<div className="animate-fade-in"><h2>Rosters</h2><p>Roster management coming soon...</p></div>} />
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="coach" element={<CoachDashboard />} />
           <Route index element={<Navigate to="meets" replace />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />

@@ -16,19 +16,34 @@ export default function Login() {
     setError('');
     setLoading(true);
 
+    const handleSuccess = async (emailToFetch) => {
+      try {
+        const { getCurrentUser } = await import('../services/api');
+        const user = await getCurrentUser(emailToFetch);
+        localStorage.setItem('user', JSON.stringify(user));
+        navigate('/dashboard');
+      } catch (fetchErr) {
+        console.error(fetchErr);
+        setError('User not found or not authorized.');
+      }
+    };
+
     try {
+
       // In development with dummy keys, we might just bypass this if it fails, 
       // but for now we attempt standard login.
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard/meets');
+      await handleSuccess(email);
     } catch (err) {
       console.error(err);
-      // For demo purposes, we will allow login to pass if firebase fails due to dummy config
-      if (err.code === 'auth/invalid-api-key') {
+      // Display the actual error code so we can debug, or bypass if it's a known dummy key issue
+      if (err.code === 'auth/invalid-api-key' || err.code === 'auth/api-key-not-valid.-please-pass-a-valid-api-key.' || err.message?.includes('API key not valid')) {
         console.warn("Using dummy Firebase config. Bypassing login for development.");
-        navigate('/dashboard/meets');
+        // Use the email entered to fetch the user
+        await handleSuccess(email);
       } else {
-        setError('Failed to log in. Please check your credentials.');
+        // Show the actual error to the user for debugging
+        setError(`Failed to log in: ${err.code || err.message || 'Unknown error'}`);
       }
     }
     

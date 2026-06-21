@@ -19,9 +19,13 @@ def seed_database():
         # Create a meet
         meet_id = "meet_" + generate_id(8)
         print(f"Creating Meet with ID: {meet_id}")
-        meet = models.Meet(id=meet_id, name="Test Database Meet", num_lanes=6, empty_lanes=False)
+        meet = models.Meet(id=meet_id, name="Test Database Meet", num_lanes=6, empty_lanes=False, is_active=True)
         db.add(meet)
         
+        # Create default Admin user
+        admin_user = models.User(id="user_admin", email="admin@example.com", role="admin")
+        db.add(admin_user)
+
         # Create some teams (we'll look at what's in the CSV, e.g. 'hab', 'islands', etc.)
         teams_data = [
             {"id": "team_hab", "name": "Habersham", "short_id": "hab"},

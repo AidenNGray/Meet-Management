@@ -3,3 +3,5 @@ uvicorn==0.30.1
 python-multipart==0.0.9
 reportlab==4.2.0
 sqlalchemy==2.0.30
+pandas
+openpyxl
