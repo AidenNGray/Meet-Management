@@ -36,55 +36,45 @@ class Meet:
         pass
 
 
-    def importFile(self, filename : str) -> None:
+    def load_from_db(self, db, meet_id: str) -> None:
         """
-        Takes a .csv file and generates a swimmer object for each entry
+        Loads swimmers and relay entries directly from the database for a specific meet.
         """
-        with open(filename, 'r') as file:
-            csvReader = csv.reader(file)
-            next(csvReader) # skips header
-            for row in csvReader:
-                if row:
-                    swimmerID = "".join(random.choices(string.ascii_letters, k=5))
-                    newSwimmer = Swimmer(swimmerID, row)
-                    self._idToSwimmer.update({swimmerID:newSwimmer})
+        from models import Meet as DBMeet, Swimmer as DBSwimmer, Entry, RelayEntry
+        
+        db_meet = db.query(DBMeet).filter(DBMeet.id == meet_id).first()
+        if not db_meet:
+            raise ValueError(f"Meet {meet_id} not found in database.")
+            
+        # Get all swimmers associated with this meet's entries
+        swimmers_query = db.query(DBSwimmer).join(Entry).filter(Entry.meet_id == meet_id).distinct().all()
+        for db_swimmer in swimmers_query:
+            newSwimmer = Swimmer(db_swimmer=db_swimmer)
+            self._idToSwimmer[newSwimmer.getSwimID()] = newSwimmer
 
-    def importRelays(self, filename: str) -> None:
-        """
-        Takes a .csv file and imports relay entries.
-        Format: Team,Age Group,Gender,Stroke,Relay Identifier,Swimmer 1,Swimmer 2,Swimmer 3,Swimmer 4
-        """
-        with open(filename, 'r') as file:
-            csvReader = csv.reader(file)
-            next(csvReader) # Skip header
-            for row in csvReader:
-                if not row or not row[0]: continue
-                team_name = row[0].strip()
-                age_group = row[1].strip()
-                gender = row[2].strip()
-                stroke = row[3].strip()
-                identifier = row[4].strip()
-                swimmers = [s.strip() for s in row[5:] if s.strip()]
-                
-                # Look up teamID from config
-                team_id = "unknown"
-                for t in self._config.get("teams", []):
-                    if t["name"].lower() == team_name.lower():
-                        team_id = t["id"]
-                        break
-                
-                relay_data = {
-                    "team": team_name,
-                    "teamID": team_id,
-                    "age_group": age_group,
-                    "gender": gender,
-                    "stroke": stroke,
-                    "identifier": identifier,
-                    "swimmers": swimmers
-                }
-                self._importedRelays.append(relay_data)
+        # Get all relays associated with this meet
+        relays_query = db.query(RelayEntry).filter(RelayEntry.meet_id == meet_id).all()
+        for r in relays_query:
+            team_id = r.team.short_id if r.team else r.team_id
+            
+            # Extract swimmers if relationships exist
+            swimmers = []
+            if r.swimmer1: swimmers.append(r.swimmer1.first_name + " " + r.swimmer1.last_name)
+            if r.swimmer2: swimmers.append(r.swimmer2.first_name + " " + r.swimmer2.last_name)
+            if r.swimmer3: swimmers.append(r.swimmer3.first_name + " " + r.swimmer3.last_name)
+            if r.swimmer4: swimmers.append(r.swimmer4.first_name + " " + r.swimmer4.last_name)
+            
+            relay_data = {
+                "team": r.team.name if r.team else team_id,
+                "teamID": team_id,
+                "age_group": r.age_group,
+                "gender": r.gender,
+                "stroke": r.stroke,
+                "identifier": r.identifier,
+                "swimmers": swimmers
+            }
+            self._importedRelays.append(relay_data)
 
-        #print(f"There are {len(self._idToSwimmer)} swimmers imported")
 
 
     def generateEvents(self) -> None:

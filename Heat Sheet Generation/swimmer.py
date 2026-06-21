@@ -2,7 +2,6 @@
 # by Aiden Gray
 # Last modified 5/27/2024
 
-import test
 import random
 
 
@@ -10,24 +9,39 @@ class Swimmer:
     """
     Object for each swimmer in meet
     Stores name, age, team, events, and relay status
-    Meant to be generated from .csv file formated as below:
-    "first name,last name,gender,age,team,event 1,event 2,event 3,medley relay,free relay" 
+    Can be generated from a database model or a .csv file.
     """
 
-    def __init__(self, swimID : str, infoLine : list):
-        self.userID_ = swimID
-        
-        self.firstName_ = infoLine[0].title()
-        self.lastName_ = infoLine[1].title()
-        self.age_ = infoLine[2]
-        self.gender_ = infoLine[3][0].lower()
-        self.team_ = infoLine[4]
-        self.event1_ = infoLine[5].lower().strip()
-        self.event2_ = infoLine[6].lower().strip()
-        self.event3_ = infoLine[7].lower().strip()
-        self.medley_ = infoLine[8]
-        self.free_ = infoLine[9]
+    def __init__(self, swimID : str = None, infoLine : list = None, db_swimmer = None):
+        if db_swimmer:
+            self.userID_ = db_swimmer.id
+            self.firstName_ = db_swimmer.first_name.title()
+            self.lastName_ = db_swimmer.last_name.title()
+            self.age_ = str(db_swimmer.age)
+            self.gender_ = db_swimmer.gender.lower()
+            self.team_ = db_swimmer.team_id # or team short_name depending on mapping
 
+            events = [e.event_type.lower().strip() for e in db_swimmer.entries]
+            self.event1_ = events[0] if len(events) > 0 else ""
+            self.event2_ = events[1] if len(events) > 1 else ""
+            self.event3_ = events[2] if len(events) > 2 else ""
+            self.medley_ = "False"
+            self.free_ = "False"
+        elif infoLine and swimID:
+            self.userID_ = swimID
+            
+            self.firstName_ = infoLine[0].title()
+            self.lastName_ = infoLine[1].title()
+            self.age_ = infoLine[2]
+            self.gender_ = infoLine[3][0].lower()
+            self.team_ = infoLine[4]
+            self.event1_ = infoLine[5].lower().strip()
+            self.event2_ = infoLine[6].lower().strip()
+            self.event3_ = infoLine[7].lower().strip()
+            self.medley_ = infoLine[8]
+            self.free_ = infoLine[9]
+        else:
+            raise ValueError("Must provide either db_swimmer or both swimID and infoLine")
 
     def __str__(self) -> str:
         return f"{self.firstName_} {self.lastName_} is registered for {self.event1_}, {self.event2_}, and {self.event3_}."

@@ -38,16 +38,16 @@ def title():
 
 
 def generate_meet_pdf(
+    db,
+    meet_id: str,
     meetName: str,
     numLanes: int,
     emptyLanes: bool,
-    swimmer_files: list[str],
-    relay_files: list[str],
     temp_dir: str = "Event Outputs/",
     pdf_out_dir: str = "pdf Outputs/"
 ) -> str:
     """
-    Programmatic entry point for generating a meet pdf.
+    Programmatic entry point for generating a meet pdf from the database.
     Returns the absolute path to the generated PDF.
     """
     import os
@@ -56,13 +56,8 @@ def generate_meet_pdf(
         
     meetObject = Meet(meetName, config, numLanes, emptyLanes)
 
-    for filename in relay_files:
-        meetObject.importRelays(filename)
-        print(f"{filename} (Relays) imported")
-        
-    for filename in swimmer_files:
-        meetObject.importFile(filename)
-        print(f"{filename} (Swimmers) imported")
+    print(f"Loading data from database for meet {meet_id}...")
+    meetObject.load_from_db(db, meet_id)
 
     print(f"Generating events for {meetName}...")
     meetObject.generateEvents()
